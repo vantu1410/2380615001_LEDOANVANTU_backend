@@ -42,3 +42,13 @@ dotnet test tests/LEDOANVANTU2.Api.Tests/LEDOANVANTU2.Api.Tests.csproj --verbosi
 ```
 
 The 16 backend cases use isolated SQLite databases with relational unique constraints to check OTP registration, automatic linking, code conflicts, manual account creation, activation and password preservation. They do not send network email or write to the deployed database.
+
+## API chức năng thiết bị và đăng xuất
+
+- POST /api/Auth/logout: vô hiệu hóa token đang đăng nhập.
+- GET /api/Face, POST /api/Face/enroll, POST /api/Face/verify, DELETE /api/Face: mã hóa mẫu và đối chiếu khuôn mặt trên API. Cần phiên OTP còn hiệu lực, không gia hạn token bằng khuôn mặt; demo chưa chống ảnh/video giả mạo.
+- GET/POST /api/Locations: lưu và xem lịch sử GPS, tạo liên kết bản đồ chia sẻ.
+- GET/POST /api/Pressure: lưu cửa sổ số đo, thống kê thấp/cao/trung bình và cảnh báo biến động.
+- GET/PUT /api/Settings: lưu cỡ chữ và màu nền theo tài khoản.
+
+Flutter đã gọi các API này; camera, GPS và cảm biến vẫn lấy dữ liệu trên điện thoại. Cài đặt giao diện có nút Lưu giao diện vào tài khoản. Phiên đã logout hoặc sai khuôn mặt 5 lần phải đăng nhập OTP lại. Swagger có nút Authorize để nhập accessToken; link Swagger hiện tại giữ nguyên sau cập nhật.
